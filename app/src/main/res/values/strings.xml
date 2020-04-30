@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+
+    <string name="MainHeading">ChatApp</string>
+    <string name="MainLoginHeading">Enter Your Login Credentials</string>
+    <string name="MainLoginUserInput">Enter Your Username</string>
+    <string name="MainLoginPasswordInput">Enter Your Password</string>
+    <string name="MainLoginButtonLogin">Submit</string>
+    <string name="MainForgotPassword">Forgot Your Password</string>
+    <string name="MainRegisterUser">Register New User</string>
+
+    <string name="RegisterUserHeading">Register Yourself</string>
+    <string name="RegisterUserInputName">Enter Your Name</string>
+    <string name="RegisterUserInputUsername">Enter Your Username</string>
+    <string name="RegisterUserInputPassword">Enter Your Password</string>
+    <string name="RegisterUserInputPasswordConfirm">Confirm Your Password</string>
+    <string name="RegisterUserInputDOB">Enter Your Date of Birth (DD/MM/YYYY)</string>
+    <string name="RegisterUserSubmitButton">Submit</string>
+
+    <string name="ForgotPasswordHeading">Reset Your Password</string>
+    <string name="ForgotPasswordInputUsername">Enter Your Username</string>
+    <string name="ForgotPasswordInputDOB">Enter your Date of Birth (DD/MM/YYYY)</string>
+    <string name="ForgotPasswordSubmit">Reset Your Password</string>
+    <string name="ForgotPasswordInputNewPassword">Enter the New Password</string>
+    <string name="ForgotPasswordInputConfirmPassword">Confirm Password</string>
+    <string name="ForgotPasswordResetPassword">Reset Your Password</string>
+    <string name="ForgotPasswordClose">Close</string>
+
+    <string name="ChatActivityHeading">ChatApp</string>
+    <string name="ChatActivityLogout">Log Out</string>
+
+    <string name="MessageFragmentInputMessage">Enter the Message</string>
+    <string name="MessageFragmentButtonSubmit">Send</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
