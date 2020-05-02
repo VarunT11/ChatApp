@@ -62,56 +62,15 @@ public class MainActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ApplicationClass.isInternetConnection(MainActivity.this)) {
 
-                dbRef.child(DbVariables.KEY_USER).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        ApplicationClass.userList.clear();
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                            ApplicationClass.userList.add(new User(dataSnapshot1.getKey(),dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString()));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                final String username,password;
-                username=etUsername.getText().toString();
-                password=etPassword.getText().toString();
-                if(username.isEmpty() || password.isEmpty()){
-                    Toast.makeText(MainActivity.this,"Please Fill the Login Credentials",Toast.LENGTH_SHORT).show();
-                }
-                else{
                     dbRef.child(DbVariables.KEY_USER).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            boolean UserAuth=false;
-                            for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                                if(dataSnapshot1.getKey().equals(username)){
-                                    if(dataSnapshot1.child(DbVariables.KEY_USER_PASSWORD).getValue().equals(password)){
-                                        UserAuth=true;
-                                        CurrentUserInfo.LoggedIn=true;
-                                        CurrentUserInfo.Name=dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString();
-                                        CurrentUserInfo.Username=username;
-                                    }
-                                    break;
-                                }
+                            ApplicationClass.userList.clear();
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                ApplicationClass.userList.add(new User(dataSnapshot1.getKey(), dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString()));
                             }
-                            if(UserAuth){
-                                etUsername.setText("");
-                                etPassword.setText("");
-                                Toast.makeText(MainActivity.this,"Login Successful for "+CurrentUserInfo.Name,Toast.LENGTH_LONG).show();
-                                Intent intent=new Intent(MainActivity.this,com.example.chatapp.ChatActivity.class);
-
-                                startActivity(intent);
-                            }
-                            else{
-                                Toast.makeText(MainActivity.this,"Incorrect Login Credentials",Toast.LENGTH_SHORT).show();
-                            }
-
                         }
 
                         @Override
@@ -119,6 +78,50 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    final String username, password;
+                    username = etUsername.getText().toString();
+                    password = etPassword.getText().toString();
+                    if (username.isEmpty() || password.isEmpty()) {
+                        Toast.makeText(MainActivity.this, "Please Fill the Login Credentials", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dbRef.child(DbVariables.KEY_USER).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                boolean UserAuth = false;
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    if (dataSnapshot1.getKey().equals(username)) {
+                                        if (dataSnapshot1.child(DbVariables.KEY_USER_PASSWORD).getValue().equals(password)) {
+                                            UserAuth = true;
+                                            CurrentUserInfo.LoggedIn = true;
+                                            CurrentUserInfo.Name = dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString();
+                                            CurrentUserInfo.Username = username;
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (UserAuth) {
+                                    etUsername.setText("");
+                                    etPassword.setText("");
+                                    Toast.makeText(MainActivity.this, "Login Successful for " + CurrentUserInfo.Name, Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(MainActivity.this, com.example.chatapp.ChatActivity.class);
+
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -127,15 +130,25 @@ public class MainActivity extends AppCompatActivity {
         btnRegisterNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,com.example.chatapp.RegisterNewUser.class);
-                startActivityForResult(intent,REQUEST_CODE_REGISTER);
+                if(ApplicationClass.isInternetConnection(MainActivity.this)) {
+                    Intent intent = new Intent(MainActivity.this, com.example.chatapp.RegisterNewUser.class);
+                    startActivityForResult(intent, REQUEST_CODE_REGISTER);
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,com.example.chatapp.ForgotPassword.class));
+                if (ApplicationClass.isInternetConnection(MainActivity.this)) {
+                    startActivity(new Intent(MainActivity.this, com.example.chatapp.ForgotPassword.class));
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
