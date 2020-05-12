@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".UpdateProfile">
+
+    <ImageView
+        android:id="@+id/imgUpdateProfileTop"
+        android:layout_width="258dp"
+        android:layout_height="93dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:srcCompat="@drawable/logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutUpdateProfile2"
+        android:layout_width="0dp"
+        android:layout_height="600dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgUpdateProfileTop"
+        app:layout_constraintVertical_bias="0.1">
+
+        <TextView
+            android:id="@+id/tvUpdateProfileHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baumans"
+            android:text="@string/ProfileUpdateHeading"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/cvUpdateProfileDP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvUpdateProfileDP"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutProfilePicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProfileUpdateUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bubblegum_sans"
+                    android:gravity="center_horizontal"
+                    android:text="TextView"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/imgProfilePic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+
+                <Button
+                    android:id="@+id/btnUpdateDisplayName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/carter_one"
+                    android:text="@string/ProfileUpdateNameUpdate"
+                    android:textColor="@color/colorTextIcons" />
+
+                <Button
+                    android:id="@+id/btnUpdatePhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/carter_one"
+                    android:text="@string/ProfileUpdatePhotoUpdate"
+                    android:textColor="@color/colorTextIcons" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvUpdateProfileFriend"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvUpdateProfileDP">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutUpdateProfileFriend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvProfileUpdateFriendHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/marko_one"
+                    android:text="@string/ProfileUpdateFriendHeading"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.01" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvUpdateProfileFriendsList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                    app:cardCornerRadius="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.02"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileUpdateFriendHeading"
+                    app:layout_constraintVertical_bias="0.02">
+
+                    <LinearLayout
+                        android:id="@+id/linearlayoutUpdateProfileViewFriends"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvUpdateProfileFriendsFriendListNumFriendsLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:fontFamily="@font/chewy"
+                            android:gravity="center_horizontal"
+                            android:text="@string/ProfileUpdateFriendsFriendListLabel"
+                            android:textColor="@color/colorTextIcons"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvUpdateProfileFriendsFriendListNumFriends"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:fontFamily="@font/carter_one"
+                            android:gravity="center_horizontal"
+                            android:text="TextView"
+                            android:textColor="@color/colorTextIcons"
+                            android:textSize="16sp" />
+
+                        <Button
+                            android:id="@+id/btnUpdateProfileFriendsFriendListViewFriends"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:background="@color/colorAccent"
+                            android:fontFamily="@font/coiny"
+                            android:text="@string/btnProfileUpdateFriendsFriendListViewFriends"
+                            android:textColor="@color/colorTextIcons" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvUpdateProfileSentRequests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                    app:cardCornerRadius="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.98"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProfileUpdateFriendHeading"
+                    app:layout_constraintVertical_bias="0.02">
+
+                    <LinearLayout
+                        android:id="@+id/linearlayoutUpdateProfileFriendRequestSent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/btnUpdateProfileFriendsFindNewFriends"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:background="@color/colorAccent"
+                            android:fontFamily="@font/coiny"
+                            android:text="@string/btnProfileUpdateFindFriends"
+                            android:textColor="@color/colorTextIcons" />
+
+                        <Button
+                            android:id="@+id/btnUpdateProfileFriendsViewReceivedRequests"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:background="@color/colorAccent"
+                            android:fontFamily="@font/coiny"
+                            android:text="@string/btnProfileUpdateFriendsReceivedRequest"
+                            android:textColor="@color/colorTextIcons" />
+
+                        <Button
+                            android:id="@+id/btnUpdateProfileFriendsViewSentRequests"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:background="@color/colorAccent"
+                            android:fontFamily="@font/coiny"
+                            android:text="@string/btnProfileUpdateFriendsSentRequest"
+                            android:textColor="@color/colorTextIcons" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

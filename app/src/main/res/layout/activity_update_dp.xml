@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutUpdateDpMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".UpdateDp">
+
+    <TextView
+        android:id="@+id/tvUpdateDpHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/chewy"
+        android:text="@string/UpdateDpHeading"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/cvUpdateDpPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvUpdateDpPhoto"
+        android:layout_width="310dp"
+        android:layout_height="310dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2">
+
+
+        <ImageView
+            android:id="@+id/imgUpdateDpPhoto"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="2dp"
+            app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cvUpdateDpPhoto"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/cvUpdateDpPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/cvUpdateDpPhoto"
+        app:layout_constraintVertical_bias="0.191">
+
+        <Button
+            android:id="@+id/btnUpdateDpChoose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/coiny"
+            android:text="@string/btnUpdateDpChoose"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnUpdateDpUpload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/coiny"
+            android:text="@string/btnUpdateDpUpload"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/btnUpdateDpRemove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/coiny"
+            android:text="@string/btnUpdateDpRemove"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
