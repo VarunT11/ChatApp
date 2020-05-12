@@ -1,47 +1,90 @@
 package com.example.chatapp;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.CursorIndexOutOfBoundsException;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.net.Inet4Address;
+import java.util.Arrays;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
 
-    EditText etUsername,etPassword;
-    Button btnSubmit, btnRegisterNewUser, btnForgotPassword;
-    int REQUEST_CODE_REGISTER=1001;
-    FirebaseDatabase database=FirebaseDatabase.getInstance();
-    DatabaseReference dbRef=database.getReference();
+public class MainActivity extends AppCompatActivity implements CheckUserExists.CheckUserCallBackInterface, UpdateCurrentUserData.UpdateDataCallBackInterface {
+
+    final int RC_SIGN_IN=1;
+    final int RC_UPDATE_PROFILE=2;
+
+    public final static String NOTIFICATION_CHANNEL_ID="NotificationChannelID";
+
+    TextView tvSignInLink,tvGreetings;
+    Button btnGoToChat,btnUpdateProfile,btnSignOut;
+    ProgressDialog progressDialog;
+
+    private List<AuthUI.IdpConfig> AuthProviders= Arrays.asList(
+            new AuthUI.IdpConfig.GoogleBuilder().build(),
+            new AuthUI.IdpConfig.EmailBuilder().build()
+    );
+
+    public void UpdateMainActivity(){
+        if(FirebaseHandler.IsUserLoggedIn()){
+            tvSignInLink.setVisibility(View.GONE);
+            tvGreetings.setVisibility(View.VISIBLE);
+            btnGoToChat.setVisibility(View.VISIBLE);
+            btnUpdateProfile.setVisibility(View.VISIBLE);
+            btnSignOut.setVisibility(View.VISIBLE);
+            tvGreetings.setText("Hello "+CurrentUserData.DisplayName);
+        }
+        else {
+            tvSignInLink.setVisibility(View.VISIBLE);
+            tvGreetings.setVisibility(View.GONE);
+            btnGoToChat.setVisibility(View.GONE);
+            btnUpdateProfile.setVisibility(View.GONE);
+            btnSignOut.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode==REQUEST_CODE_REGISTER){
+        if(requestCode==RC_SIGN_IN){
             if(resultCode==RESULT_OK){
-                Toast.makeText(MainActivity.this,"User Registered Successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,"Sign-In Successful",Toast.LENGTH_SHORT).show();
+                new CheckUserExists(MainActivity.this, progressDialog);
             }
-
-            if(resultCode==RESULT_CANCELED){
-                Toast.makeText(MainActivity.this,"User Registration Cancelled",Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(MainActivity.this,"Sign-In Cancelled",Toast.LENGTH_SHORT).show();
             }
         }
+        if(requestCode==RC_UPDATE_PROFILE){
+            new UpdateCurrentUserData(this,progressDialog);
+        }
+    }
 
+    private void CreateNotificationChannel(){
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.O){
+            CharSequence name=getString(R.string.NotificationChannelName);
+            String description=getString(R.string.NotificationChannelDescription);
+            int importance= NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel=new NotificationChannel(NOTIFICATION_CHANNEL_ID,name,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
@@ -49,108 +92,81 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etUsername=findViewById(R.id.etUsername);
-        etPassword=findViewById(R.id.etPassword);
-        btnSubmit=findViewById(R.id.btnSubmit);
-        btnRegisterNewUser=findViewById(R.id.btnRegisterNewUser);
-        btnForgotPassword=findViewById(R.id.btnForgotPassword);
+        tvSignInLink=findViewById(R.id.tvMainSignInLink);
+        tvGreetings=findViewById(R.id.tvMainGreetings);
+        btnGoToChat=findViewById(R.id.btnMainGoToChat);
+        btnUpdateProfile=findViewById(R.id.btnMainUpdateProfile);
+        btnSignOut=findViewById(R.id.btnMainSignOut);
+        progressDialog=new ProgressDialog(this);
 
-        if(CurrentUserInfo.LoggedIn){
-            startActivity(new Intent(MainActivity.this,com.example.chatapp.ChatActivity.class));
+        CreateNotificationChannel();
+
+
+        if(FirebaseHandler.IsUserLoggedIn()){
+            new UpdateCurrentUserData(this,progressDialog);
         }
+        else
+            UpdateMainActivity();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        tvSignInLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ApplicationClass.isInternetConnection(MainActivity.this)) {
-
-                    dbRef.child(DbVariables.KEY_USER).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            ApplicationClass.userList.clear();
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                ApplicationClass.userList.add(new User(dataSnapshot1.getKey(), dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString()));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    final String username, password;
-                    username = etUsername.getText().toString();
-                    password = etPassword.getText().toString();
-                    if (username.isEmpty() || password.isEmpty()) {
-                        Toast.makeText(MainActivity.this, "Please Fill the Login Credentials", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dbRef.child(DbVariables.KEY_USER).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                boolean UserAuth = false;
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    if (dataSnapshot1.getKey().equals(username)) {
-                                        if (dataSnapshot1.child(DbVariables.KEY_USER_PASSWORD).getValue().equals(password)) {
-                                            UserAuth = true;
-                                            CurrentUserInfo.LoggedIn = true;
-                                            CurrentUserInfo.Name = dataSnapshot1.child(DbVariables.KEY_USER_NAME).getValue().toString();
-                                            CurrentUserInfo.Username = username;
-                                        }
-                                        break;
-                                    }
-                                }
-                                if (UserAuth) {
-                                    etUsername.setText("");
-                                    etPassword.setText("");
-                                    Toast.makeText(MainActivity.this, "Login Successful for " + CurrentUserInfo.Name, Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(MainActivity.this, com.example.chatapp.ChatActivity.class);
-
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Incorrect Login Credentials", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-                else {
-                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
-                }
+                startActivityForResult
+                        (AuthUI.getInstance()
+                                        .createSignInIntentBuilder()
+                                        .setAvailableProviders(AuthProviders)
+                                        .setLogo(R.drawable.logo)
+                                        .setIsSmartLockEnabled(false)
+                                        .setTheme(R.style.LoginTheme)
+                                .build()
+                                , RC_SIGN_IN);
             }
         });
 
-
-        btnRegisterNewUser.setOnClickListener(new View.OnClickListener() {
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ApplicationClass.isInternetConnection(MainActivity.this)) {
-                    Intent intent = new Intent(MainActivity.this, com.example.chatapp.RegisterNewUser.class);
-                    startActivityForResult(intent, REQUEST_CODE_REGISTER);
-                }
-                else {
-                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
-                }
+                FirebaseHandler.SignOutCurrentUser();
+                UpdateMainActivity();
             }
         });
 
-        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ApplicationClass.isInternetConnection(MainActivity.this)) {
-                    startActivity(new Intent(MainActivity.this, com.example.chatapp.ForgotPassword.class));
-                }
-                else {
-                    Toast.makeText(MainActivity.this,"Please Connect to Internet",Toast.LENGTH_LONG).show();
-                }
+                startActivityForResult(new Intent(MainActivity.this,UpdateProfile.class),RC_UPDATE_PROFILE);
             }
         });
 
+        btnGoToChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ChatActivity.class));
+            }
+        });
+
+    }
+
+    @Override
+    public void UserExists(boolean result) {
+        if(!result){
+            FirebaseUser cUser=FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseHandler.AddNewUser(progressDialog);
+            CurrentUserData.uId=cUser.getUid();
+            CurrentUserData.DisplayName=cUser.getDisplayName();
+            CurrentUserData.EmailId=cUser.getEmail();
+            CurrentUserData.NumFriends=0;
+            CurrentUserData.photoExists=false;
+            UpdateMainActivity();
+            FriendRequestHandler.setUpRequestListener();
+        }
+        else
+            new UpdateCurrentUserData(MainActivity.this,progressDialog);
+    }
+
+    @Override
+    public void DataUpdated() {
+        UpdateMainActivity();
+        FriendRequestHandler.setUpRequestListener();
     }
 }

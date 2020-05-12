@@ -1,39 +1,42 @@
 <resources>
     <string name="app_name">ChatApp</string>
 
-    <string name="MainHeading">ChatApp</string>
-    <string name="MainLoginHeading">Enter Your Login Credentials</string>
-    <string name="MainLoginUserInput">Enter Your Username</string>
-    <string name="MainLoginPasswordInput">Enter Your Password</string>
-    <string name="MainLoginButtonLogin">Submit</string>
-    <string name="MainForgotPassword">Forgot Your Password</string>
-    <string name="MainRegisterUser">Register New User</string>
+    <string name="SignInLink">Sign In to Continue</string>
+    <string name="MainGoToChat">See Your Messages</string>
+    <string name="LogOut">Sign Out of ChatApp</string>
+    <string name="UpdateProfile">Update Your Profile</string>
 
-    <string name="RegisterUserHeading">Register Yourself</string>
-    <string name="RegisterUserInputName">Enter Your Name</string>
-    <string name="RegisterUserInputUsername">Enter Your Username</string>
-    <string name="RegisterUserInputPassword">Enter Your Password</string>
-    <string name="RegisterUserInputPasswordConfirm">Confirm Your Password</string>
-    <string name="RegisterUserInputDOB">Enter Your Date of Birth (DD/MM/YYYY)</string>
-    <string name="RegisterUserSubmitButton">Submit</string>
+    <string name="ProfileUpdatePhotoUpdate">Update Your Profile Picture</string>
+    <string name="ProfileUpdateNameUpdate">Edit Your Display Name</string>
+    <string name="ProfileUpdateHeading">Update Your Profile</string>
+    <string name="ProfileUpdateFriendHeading">Friend Zone</string>
 
-    <string name="ForgotPasswordHeading">Reset Your Password</string>
-    <string name="ForgotPasswordInputUsername">Enter Your Username</string>
-    <string name="ForgotPasswordInputDOB">Enter your Date of Birth (DD/MM/YYYY)</string>
-    <string name="ForgotPasswordSubmit">Reset Your Password</string>
-    <string name="ForgotPasswordInputNewPassword">Enter the New Password</string>
-    <string name="ForgotPasswordInputConfirmPassword">Confirm Password</string>
-    <string name="ForgotPasswordResetPassword">Reset Your Password</string>
-    <string name="ForgotPasswordClose">Close</string>
+    <string name="ProfileUpdateFriendsFriendListLabel">Number of Friends</string>
+    <string name="btnProfileUpdateFriendsFriendListViewFriends">View Your Friends</string>
 
-    <string name="ChatActivityHeading">ChatApp</string>
-    <string name="ChatActivityLogout">Log Out</string>
+    <string name="ProfileUpdateFriendsReceivedRequestLabel">Received Requests</string>
+    <string name="btnProfileUpdateFriendsReceivedRequest">View Received Requests</string>
 
-    <string name="MessageFragmentInputMessage">Enter the Message</string>
-    <string name="MessageFragmentButtonSubmit">Send</string>
+    <string name="ProfileUpdateFriendsSentRequestLabel">Sent Requests</string>
+    <string name="btnProfileUpdateFriendsSentRequest">View Sent Requests</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btnProfileUpdateFindFriends">Find New Friends</string>
 
+    <string name="btnUpdateNameSubmit">Change UserName</string>
+
+    <string name="UpdateDpHeading">Update Your Profile Picture</string>
+    <string name="btnUpdateDpChoose">Choose Photo</string>
+    <string name="btnUpdateDpUpload">Upload</string>
+    <string name="btnUpdateDpRemove">Remove Photo</string>
+
+    <string name="FindFriendsHeading">Find New Friends</string>
+    <string name="ViewSentRequestsHeading">View Sent Requests</string>
+    <string name="ViewReceivedRequestsHeading">View Received Requests</string>
+    <string name="ViewFriendsHeading">View Your Friends List</string>
+
+    <string name="NotificationChannelName">Notification Channel</string>
+    <string name="NotificationChannelDescription">Channel Description</string>
+
+    <string name="FriendsListItemGoToChat">Go to Chat</string>
 
 </resources>

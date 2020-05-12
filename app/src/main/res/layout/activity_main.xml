@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,106 +9,123 @@
     tools:context=".MainActivity" >
 
 
-    <TextView
-        android:id="@+id/tvMainHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:text="@string/MainHeading"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.514" />
+    <ImageView
+        android:id="@+id/imgMainLogo"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        app:srcCompat="@drawable/logo" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
+        android:id="@+id/cvMainSignIn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
         app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335">
+        app:cardCornerRadius="5dp"
+        app:cardElevation="15dp">
 
+        <TextView
+            android:id="@+id/tvMainSignInLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/kavoon"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/SignInLink"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="24sp" />
 
-        <LinearLayout
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvMainGreetings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="24sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMainGoToChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="15dp">
+
+        <Button
+            android:id="@+id/btnMainGoToChat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvLoginHeading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/MainLoginHeading"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/etUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:hint="@string/MainLoginUserInput"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center_horizontal"
-                android:hint="@string/MainLoginPasswordInput"
-                android:inputType="textPassword" />
-
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/colorAccent"
-                android:text="@string/MainLoginButtonLogin"
-                android:textColor="@color/colorTextIcons" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnRegisterNewUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:text="@string/MainRegisterUser"
-                    android:textColor="@color/colorTextIcons" />
-
-                <Button
-                    android:id="@+id/btnForgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:text="@string/MainForgotPassword"
-                    android:textColor="@color/colorTextIcons" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/marko_one"
+            android:text="@string/MainGoToChat"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="18sp" />
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMainUpdateProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="15dp">
+
+        <Button
+            android:id="@+id/btnMainUpdateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/marko_one"
+            android:text="@string/UpdateProfile"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="18sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMainSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="15dp">
+
+        <Button
+            android:id="@+id/btnMainSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:background="@color/colorAccent"
+            android:fontFamily="@font/marko_one"
+            android:text="@string/LogOut"
+            android:textColor="@color/colorTextIcons"
+            android:textSize="18sp" />
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

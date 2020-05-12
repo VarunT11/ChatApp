@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chatapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
@@ -10,9 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgotPassword"></activity>
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".RegisterNewUser" />
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ViewFriends" />
+        <activity android:name=".ViewReceivedRequests" />
+        <activity android:name=".ViewSentRequests" />
+        <activity android:name=".FindFriends" />
+        <activity android:name=".UpdateDp" />
+        <activity android:name=".UpdateProfileName" />
+        <activity android:name=".UpdateProfile" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
