@@ -32,46 +32,66 @@ public class FriendRequestHandler{
         this.context=context;
     }
 
+
     public void CreateEventListener(){
         UserRequestListener=new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                AlreadyFriendList.add(dataSnapshot.getKey());
-                if(dataSnapshot.getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_SENT))
-                    SentRequestsList.add(dataSnapshot.getKey());
-                if(dataSnapshot.getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED)) {
-                    ReceivedRequestsList.add(dataSnapshot.getKey());
-                    new NotificationHandler(context,dataSnapshot.getKey(),dataSnapshot.getValue().toString());
+                if(dataSnapshot.hasChild(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS) && dataSnapshot.hasChild(FirebaseHandler.DB_KEY_REQUEST_SEEN)){
+                    if(!AlreadyFriendList.contains(dataSnapshot.getKey())) {
+                        AlreadyFriendList.add(dataSnapshot.getKey());
+                        if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_SENT))
+                            SentRequestsList.add(dataSnapshot.getKey());
+                        if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED)) {
+                            ReceivedRequestsList.add(dataSnapshot.getKey());
+                            if(dataSnapshot.child(FirebaseHandler.DB_KEY_REQUEST_SEEN).getValue().equals(false))
+                                new NotificationHandler(context,dataSnapshot.getKey(),FirebaseHandler.DB_VALUE_REQUEST_RECEIVED);
+                        }
+                        if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED)) {
+                            FriendsList.add(dataSnapshot.getKey());
+                            if(dataSnapshot.child(FirebaseHandler.DB_KEY_REQUEST_SEEN).getValue().equals(false))
+                                new NotificationHandler(context,dataSnapshot.getKey(),FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
+                        }
+                    }
                 }
-                if(dataSnapshot.getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED))
-                    FriendsList.add(dataSnapshot.getKey());
-                Log.d("FriendRequest",dataSnapshot.getValue()+" "+dataSnapshot.getKey());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                FriendsList.add(dataSnapshot.getKey());
-                if(SentRequestsList.contains(dataSnapshot.getKey())){
-                    SentRequestsList.remove(dataSnapshot.getKey());
-                    Log.d("MESSAGE","Sent Request to "+dataSnapshot.getKey()+" was Accepted");
-                    CurrentUserData.NumFriends++;
-                    new NotificationHandler(context,dataSnapshot.getKey(),dataSnapshot.getValue().toString());
-                }
-                if(ReceivedRequestsList.contains(dataSnapshot.getKey())) {
-                    ReceivedRequestsList.remove(dataSnapshot.getKey());
-                    Log.d("MESSAGE", "Received Request from " + dataSnapshot.getKey() + " was Accepted");
-                    CurrentUserData.NumFriends++;
+                if(dataSnapshot.hasChild(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS) && dataSnapshot.hasChild(FirebaseHandler.DB_KEY_REQUEST_SEEN)){
+                    if(dataSnapshot.hasChild(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS) && dataSnapshot.hasChild(FirebaseHandler.DB_KEY_REQUEST_SEEN)){
+                        if(!AlreadyFriendList.contains(dataSnapshot.getKey())) {
+                            AlreadyFriendList.add(dataSnapshot.getKey());
+                            if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_SENT))
+                                SentRequestsList.add(dataSnapshot.getKey());
+                            if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED)) {
+                                ReceivedRequestsList.add(dataSnapshot.getKey());
+                                new NotificationHandler(context,dataSnapshot.getKey(),FirebaseHandler.DB_VALUE_REQUEST_RECEIVED);
+                            }
+                            if (dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED))
+                                FriendsList.add(dataSnapshot.getKey());
+                        }
+                        else if(dataSnapshot.child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED)){
+                            FriendsList.add(dataSnapshot.getKey());
+                            if(ReceivedRequestsList.contains(dataSnapshot.getKey())){
+                                ReceivedRequestsList.remove(dataSnapshot.getKey());
+                            }
+                            if(SentRequestsList.contains(dataSnapshot.getKey())){
+                                SentRequestsList.remove(dataSnapshot.getKey());
+                                new NotificationHandler(context,dataSnapshot.getKey(),FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
+                            }
+                        }
+                    }
                 }
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_SENT))
-                    SentRequestsList.remove(dataSnapshot.getKey());
-                if(dataSnapshot.getValue().equals(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED))
-                    ReceivedRequestsList.remove(dataSnapshot.getKey());
                 AlreadyFriendList.remove(dataSnapshot.getKey());
-                Log.d("Cancelled Request",dataSnapshot.getValue()+" "+dataSnapshot.getKey());
+                if(ReceivedRequestsList.contains(dataSnapshot.getKey()))
+                    ReceivedRequestsList.remove(dataSnapshot.getKey());
+                if(SentRequestsList.contains(dataSnapshot.getKey()))
+                    SentRequestsList.remove(dataSnapshot.getKey());
             }
 
             @Override

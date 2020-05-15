@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class ViewReceivedRequests extends AppCompatActivity implements GetReceiv
 
 
     ArrayList<FriendListData> receivedRequestData;
+    TextView tvNoRequest;
     RecyclerView rcvReceivedRequests;
     RecyclerView.Adapter AdapterReceivedRequests;
     RecyclerView.LayoutManager ReceivedRequestsLayoutManager;
@@ -27,15 +30,24 @@ public class ViewReceivedRequests extends AppCompatActivity implements GetReceiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_received_requests);
 
-        rcvReceivedRequests=findViewById(R.id.rcvReceivedRequests);
-        rcvReceivedRequests.setHasFixedSize(true);
+        tvNoRequest=findViewById(R.id.tvReceivedRequestsNoRequest);
 
-        ReceivedRequestsLayoutManager=new LinearLayoutManager(this);
-        rcvReceivedRequests.setLayoutManager(ReceivedRequestsLayoutManager);
+        if(FriendRequestHandler.ReceivedRequestsList.size()==0){
+            tvNoRequest.setVisibility(View.VISIBLE);
+            tvNoRequest.setText("You have 0 Received Requests");
+        }
+        else {
+            tvNoRequest.setVisibility(View.GONE);
+            rcvReceivedRequests = findViewById(R.id.rcvReceivedRequests);
+            rcvReceivedRequests.setHasFixedSize(true);
 
-        progressDialog=new ProgressDialog(this);
+            ReceivedRequestsLayoutManager = new LinearLayoutManager(this);
+            rcvReceivedRequests.setLayoutManager(ReceivedRequestsLayoutManager);
 
-        new GetReceivedRequestUserData(this,progressDialog);
+            progressDialog = new ProgressDialog(this);
+
+            new GetReceivedRequestUserData(this, progressDialog);
+        }
     }
 
     int ListPosition=0;

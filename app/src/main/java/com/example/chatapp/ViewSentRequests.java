@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class ViewSentRequests extends AppCompatActivity implements GetSentReques
 
     ArrayList<FriendListData> sentRequestsListData;
 
+    TextView tvNoRequest;
     RecyclerView rcvSentRequests;
     RecyclerView.Adapter AdapterSentRequests;
     RecyclerView.LayoutManager LayoutManagerAdapterSentRequests;
@@ -27,15 +30,25 @@ public class ViewSentRequests extends AppCompatActivity implements GetSentReques
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sent_requests);
 
-        progressDialog=new ProgressDialog(this);
+        tvNoRequest=findViewById(R.id.tvSentRequestsNoRequest);
 
-        rcvSentRequests=findViewById(R.id.rcvSentRequests);
-        rcvSentRequests.setHasFixedSize(true);
+        if(FriendRequestHandler.SentRequestsList.size()==0){
+            tvNoRequest.setVisibility(View.VISIBLE);
+            tvNoRequest.setText("You have 0 Pending Sent Requests");
+        }
 
-        LayoutManagerAdapterSentRequests=new LinearLayoutManager(this);
-        rcvSentRequests.setLayoutManager(LayoutManagerAdapterSentRequests);
+        else {
+            tvNoRequest.setVisibility(View.GONE);
+            progressDialog = new ProgressDialog(this);
 
-        new GetSentRequestUserData(this,progressDialog);
+            rcvSentRequests = findViewById(R.id.rcvSentRequests);
+            rcvSentRequests.setHasFixedSize(true);
+
+            LayoutManagerAdapterSentRequests = new LinearLayoutManager(this);
+            rcvSentRequests.setLayoutManager(LayoutManagerAdapterSentRequests);
+
+            new GetSentRequestUserData(this, progressDialog);
+        }
 
     }
 

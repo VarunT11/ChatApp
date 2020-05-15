@@ -32,6 +32,7 @@ public class ApplicationClass extends Application
         super.onCreate();
 
         new FriendRequestHandler(this);
+        new FriendMessageHandler(this);
 
         if(!isInternetConnection(this))
             Toast.makeText(this,"Please Connect to Internet",Toast.LENGTH_LONG).show();

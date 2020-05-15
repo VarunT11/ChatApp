@@ -4,6 +4,11 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -12,10 +17,14 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class NotificationHandler {
@@ -24,11 +33,22 @@ public class NotificationHandler {
     String UId;
     String Status;
     String DisplayName;
+    String MessageData;
+    String MessageID;
 
     NotificationHandler(Context context,String UId, String Status){
         this.UId=UId;
         this.Status=Status;
         this.context=context;
+        GetUserDetails();
+    }
+
+    NotificationHandler(Context context,String UId, String MessageData,String MessageID, String Status){
+        this.UId=UId;
+        this.context=context;
+        this.Status=Status;
+        this.MessageData=MessageData;
+        this.MessageID=MessageID;
         GetUserDetails();
     }
 
@@ -63,7 +83,8 @@ public class NotificationHandler {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(context);
-            notificationManagerCompat.notify(1,notifyBuilder.build());
+            notificationManagerCompat.notify(UId.hashCode(),notifyBuilder.build());
+            FirebaseDatabase.getInstance().getReference().child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS).child(CurrentUserData.uId).child(UId).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(true);
         }
 
         if(Status.equals(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED)){
@@ -73,7 +94,18 @@ public class NotificationHandler {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(context);
-            notificationManagerCompat.notify(2,notifyBuilder.build());
+            notificationManagerCompat.notify(UId.hashCode(),notifyBuilder.build());
+            FirebaseDatabase.getInstance().getReference().child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS).child(CurrentUserData.uId).child(UId).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(true);
+        }
+
+        if(Status.equals("FriendMessage")){
+            Intent intent=new Intent(context,UpdateProfile.class);
+            PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0);
+            notifyBuilder.setContentText("You have a new Message from "+DisplayName+"\n MESSAGE: "+MessageData)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+            NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(context);
+            notificationManagerCompat.notify(MessageID.hashCode(),notifyBuilder.build());
         }
     }
 

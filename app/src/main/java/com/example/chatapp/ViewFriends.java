@@ -59,4 +59,5 @@ public class ViewFriends extends AppCompatActivity implements GetFriendsList.Fri
         AdapterFriendList=new FriendsListAdapter(this,friendList);
         rcvFriendList.setAdapter(AdapterFriendList);
     }
+
 }

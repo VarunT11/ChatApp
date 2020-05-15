@@ -33,12 +33,14 @@ public class SendFriendRequest {
         progressDialog.setMessage("Sending Friend Request");
         progressDialog.show();
         DatabaseReference RequestRef=FirebaseDatabase.getInstance().getReference().child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS).child(sourceUid);
-        RequestRef.child(destinationUid).setValue(FirebaseHandler.DB_VALUE_REQUEST_SENT).addOnCompleteListener(new OnCompleteListener<Void>() {
+        RequestRef.child(destinationUid).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(true);
+        RequestRef.child(destinationUid).child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).setValue(FirebaseHandler.DB_VALUE_REQUEST_SENT).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 DatabaseReference RequestRef;
                 RequestRef=FirebaseDatabase.getInstance().getReference().child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS).child(destinationUid);
-                RequestRef.child(sourceUid).setValue(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED);
+                RequestRef.child(sourceUid).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(false);
+                RequestRef.child(sourceUid).child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).setValue(FirebaseHandler.DB_VALUE_REQUEST_RECEIVED);
                 progressDialog.dismiss();
                 requestInterface.OnRequestSent();
             }

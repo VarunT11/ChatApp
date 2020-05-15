@@ -20,6 +20,17 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/tvReceivedRequestsNoRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:fontFamily="@font/berkshire_swash"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="24sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvReceivedRequests"
         android:layout_width="match_parent"

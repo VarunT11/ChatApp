@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements CheckUserExists.C
 
         CreateNotificationChannel();
 
-
         if(FirebaseHandler.IsUserLoggedIn()){
             new UpdateCurrentUserData(this,progressDialog);
         }
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements CheckUserExists.C
         btnGoToChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ChatActivity.class));
+                startActivity(new Intent(MainActivity.this,ViewFriends.class));
             }
         });
 
@@ -159,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements CheckUserExists.C
             CurrentUserData.photoExists=false;
             UpdateMainActivity();
             FriendRequestHandler.setUpRequestListener();
+            FriendMessageHandler.setUpRequestListener();
         }
         else
             new UpdateCurrentUserData(MainActivity.this,progressDialog);
@@ -168,5 +168,7 @@ public class MainActivity extends AppCompatActivity implements CheckUserExists.C
     public void DataUpdated() {
         UpdateMainActivity();
         FriendRequestHandler.setUpRequestListener();
+        FriendMessageHandler.setUpRequestListener();
     }
+
 }

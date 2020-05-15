@@ -16,10 +16,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AcceptFriendRequest {
+class AcceptFriendRequest {
 
-    AcceptRequestInterface callBackInterface;
-    String FriendUId;
+    private AcceptRequestInterface callBackInterface;
+    private String FriendUId;
 
     public interface AcceptRequestInterface{
         public void RequestAccepted();
@@ -33,8 +33,10 @@ public class AcceptFriendRequest {
 
     private void UpdateDatabase(){
         DatabaseReference UserRef= FirebaseDatabase.getInstance().getReference().child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS);
-        UserRef.child(CurrentUserData.uId).child(FriendUId).setValue(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
-        UserRef.child(FriendUId).child(CurrentUserData.uId).setValue(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
+        UserRef.child(CurrentUserData.uId).child(FriendUId).child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).setValue(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
+        UserRef.child(CurrentUserData.uId).child(FriendUId).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(true);
+        UserRef.child(FriendUId).child(CurrentUserData.uId).child(FirebaseHandler.DB_KEY_FRIEND_REQUESTS_STATUS).setValue(FirebaseHandler.DB_VALUE_REQUEST_ACCEPTED);
+        UserRef.child(FriendUId).child(CurrentUserData.uId).child(FirebaseHandler.DB_KEY_REQUEST_SEEN).setValue(false);
         UpdateFirestore();
     }
 
@@ -60,7 +62,7 @@ public class AcceptFriendRequest {
                 });
     }
 
-    long NumFriends;
+    private long NumFriends;
 
     private void UpdateUserData(){
         final DocumentReference userRef=FirebaseFirestore.getInstance().collection(FirebaseHandler.KEY_USER).document(CurrentUserData.uId);

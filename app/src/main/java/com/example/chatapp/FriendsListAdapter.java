@@ -1,6 +1,7 @@
 package com.example.chatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,19 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendsListAdapter.ViewHolder holder, int position) {
-        FriendListData tempData=friendList.get(position);
+    public void onBindViewHolder(@NonNull final FriendsListAdapter.ViewHolder holder, int position) {
+        final FriendListData tempData=friendList.get(position);
         holder.tvName.setText(tempData.getDisplayName());
         holder.tvEmail.setText(tempData.getEmailId());
         if(tempData.getPhotoUrl()!=null)
             Picasso.get().load(tempData.getPhotoUrl()).into(holder.imgPhoto);
+        holder.btnGoToChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChatActivity.FriendData=tempData;
+                holder.btnGoToChat.getContext().startActivity(new Intent(holder.btnGoToChat.getContext(),ChatActivity.class));
+            }
+        });
     }
 
     @Override
